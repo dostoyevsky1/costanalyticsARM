@@ -56,6 +56,52 @@
             }
         },
         {
+            "apiVersion": "2015-08-01",
+            "type": "Microsoft.Web/sites",
+            "name": "[parameters('functionName')]",
+            "location": "Central US",
+            "kind": "functionapp,linux",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', parameters('serverFarmName'))]",
+                "[resourceId('Microsoft.Storage/storageAccounts',parameters('storageAccountName'))]"
+            ],
+            "properties": {
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms',  parameters('serverFarmName'))]",
+                "siteConfig": {
+                "appSettings": [
+                    {
+                    "name": "AzureWebJobsDashboard",
+                    "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', parameters('storageAccountName'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts',parameters('storageAccountName')),'2015-05-01-preview').key1)]"
+                    },
+                    {
+                    "name": "AzureWebJobsStorage",
+                    "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', parameters('storageAccountName'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts',parameters('storageAccountName')),'2015-05-01-preview').key1)]"
+                    },
+                    {
+                    "name": "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING",
+                    "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', parameters('storageAccountName'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts',parameters('storageAccountName')),'2015-05-01-preview').key1)]"
+                    },
+                    {
+                    "name": "WEBSITE_CONTENTSHARE",
+                    "value": "[toLower(parameters('functionName'))]"
+                    },
+                    {
+                    "name": "FUNCTIONS_EXTENSION_VERSION",
+                    "value": "~2"
+                    },
+                    {
+                    "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+                    "value": "[reference(resourceId('microsoft.insights/components/', 'appInsights1'), '2015-05-01').InstrumentationKey]"
+                    },
+                    {
+                    "name": "FUNCTIONS_WORKER_RUNTIME",
+                    "value": "dotnet"
+                    }
+                ]
+                }
+            }
+            },
+        {
             "name": "appInsights1-appServicePlan1-AutoScaleSettings",
             "type": "Microsoft.Insights/autoscalesettings",
             "apiVersion": "2015-04-01",
@@ -198,9 +244,6 @@
                 "[concat('hidden-link:', resourceGroup().id, '/providers/Microsoft.Web/sites/', parameters('functionName'))]": "Resource",
                 "displayName": "appInsights1 ServerErrors rule for webApp1"
             },
-            "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('functionName'))]"
-            ],
             "properties": {
                 "name": "appInsights1-ServerErrors-webApp1",
                 "description": "webApp1 has some server errors, status code 5xx.",
@@ -231,9 +274,6 @@
             "tags": {
                 "displayName": "appInsights1 ForbiddenRequests rule for webApp1"
             },
-            "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('functionName'))]"
-            ],
             "properties": {
                 "name": "appInsights1-ForbiddenRequests-webApp1",
                 "description": "webApp1 has some requests that are forbidden, status code 403.",
@@ -273,57 +313,8 @@
                 "RetentionInDays": 90,
                 "publicNetworkAccessForIngestion": "Enabled",
                 "publicNetworkAccessForQuery": "Enabled"
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('functionName'))]"
-            ]
-        },
-        {
-            "apiVersion": "2015-08-01",
-            "type": "Microsoft.Web/sites",
-            "name": "[parameters('functionName')]",
-            "location": "Central US",
-            "kind": "functionapp,linux",
-            "dependsOn": [
-                "[resourceId('Microsoft.Web/serverfarms', parameters('serverFarmName'))]",
-                "[resourceId('Microsoft.Storage/storageAccounts',parameters('storageAccountName'))]"
-            ],
-            "properties": {
-                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms',  parameters('serverFarmName'))]",
-                "siteConfig": {
-                "appSettings": [
-                    {
-                    "name": "AzureWebJobsDashboard",
-                    "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', parameters('storageAccountName'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts',parameters('storageAccountName')),'2015-05-01-preview').key1)]"
-                    },
-                    {
-                    "name": "AzureWebJobsStorage",
-                    "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', parameters('storageAccountName'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts',parameters('storageAccountName')),'2015-05-01-preview').key1)]"
-                    },
-                    {
-                    "name": "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING",
-                    "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', parameters('storageAccountName'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts',parameters('storageAccountName')),'2015-05-01-preview').key1)]"
-                    },
-                    {
-                    "name": "WEBSITE_CONTENTSHARE",
-                    "value": "[toLower(parameters('functionName'))]"
-                    },
-                    {
-                    "name": "FUNCTIONS_EXTENSION_VERSION",
-                    "value": "~2"
-                    },
-                    {
-                    "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
-                    "value": "[reference(resourceId('microsoft.insights/components/', 'appInsights1'), '2015-05-01').InstrumentationKey]"
-                    },
-                    {
-                    "name": "FUNCTIONS_WORKER_RUNTIME",
-                    "value": "dotnet"
-                    }
-                ]
-                }
             }
-            }
+        }
     ],
     "outputs": {}
 }
