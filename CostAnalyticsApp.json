@@ -4,7 +4,7 @@
     "parameters": {
         "storageAccountName": {
             "type": "string",
-            "defaultValue": "CostAnalyticsAppStor"
+            "defaultValue": "CostAnalyticsStor"
         },
         "serverFarmName": {
             "type": "string",
@@ -43,7 +43,7 @@
                 "family": "Y",
                 "capacity": 0
             },
-            "kind": "functionapp",
+            "kind": "functionapp,linux",
             "properties": {
                 "perSiteScaling": false,
                 "maximumElasticWorkerCount": 1,
