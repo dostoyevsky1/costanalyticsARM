@@ -22,7 +22,7 @@
             "name": "[parameters('storageAccountName')]",
             "type": "Microsoft.Storage/storageAccounts",
             "apiVersion": "2015-06-15",
-            "location": "Central US",
+            "location": "East US",
             "tags": {
                 "displayName": "[parameters('storageAccountName')]"
             },
@@ -35,7 +35,7 @@
             "type": "Microsoft.Web/serverfarms",
             "apiVersion": "2018-02-01",
             "name": "[parameters('serverFarmName')]",
-            "location": "Central US",
+            "location": "East US",
             "sku": {
                 "name": "Y1",
                 "tier": "Dynamic",
@@ -59,7 +59,7 @@
             "apiVersion": "2015-08-01",
             "type": "Microsoft.Web/sites",
             "name": "[parameters('functionName')]",
-            "location": "Central US",
+            "location": "East US",
             "kind": "functionapp,linux",
             "dependsOn": [
                 "[resourceId('Microsoft.Web/serverfarms', parameters('serverFarmName'))]",
@@ -300,7 +300,7 @@
             "name": "appInsights1",
             "type": "Microsoft.Insights/components",
             "apiVersion": "2015-05-01",
-            "location": "Central US",
+            "location": "East US",
             "tags": {
                 "displayName": "appInsights1 Component for webApp1"
             },
