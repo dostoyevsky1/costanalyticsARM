@@ -76,7 +76,9 @@
       "location": "[parameters('location')]",
       "sku": {
         "name": "Y1",
-        "tier": "Dynamic"
+        "tier": "Dynamic",
+        "size": "Y1",
+        "family": "Y"
       },
       "properties": {
         "name": "[variables('hostingPlanName')]",
