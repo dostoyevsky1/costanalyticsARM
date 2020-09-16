@@ -44,13 +44,17 @@
     "insightslocation": {
         "type": "string",
         "defaultValue": "eastus"
+    },
+    "storageaccount": {
+        "type": "string",
+        "defaultValue": "costanalyticsstor"
     }
   },
   "variables": {
     "functionAppName": "[parameters('appName')]",
     "hostingPlanName": "[parameters('appName')]",
     "applicationInsightsName": "[parameters('appName')]",
-    "storageAccountName": "CostAnalyticsStor",
+    "storageAccountName": "[parameters('storageaccount')]",
     "functionWorkerRuntime": "[parameters('runtime')]",
     "insightsLocation": "[parameters('insightslocation')]"
   },
