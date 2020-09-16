@@ -88,7 +88,7 @@
       "type": "Microsoft.Web/sites",
       "name": "[variables('functionAppName')]",
       "location": "[parameters('location')]",
-      "kind": "functionapp",
+      "kind": "functionapp,linux",
       "dependsOn": [
         "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
         "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
@@ -126,7 +126,8 @@
               "value": "[variables('functionWorkerRuntime')]"
             }
           ]
-        }
+        },
+        "reserved": true
       }
     },
     {
