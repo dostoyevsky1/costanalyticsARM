@@ -31,12 +31,6 @@
     "runtime": {
       "type": "string",
       "defaultValue": "python",
-      "allowedValues": [
-        "node",
-        "dotnet",
-        "java",
-        "python"
-      ],
       "metadata": {
         "description": "The language worker runtime to load in the function app."
       }
@@ -51,9 +45,9 @@
     }
   },
   "variables": {
-    "functionAppName": "[parameters('appName')]",
-    "hostingPlanName": "[parameters('appName')]",
-    "applicationInsightsName": "[parameters('appName')]",
+    "functionAppName": "[concat(parameters('appName'),'Func')]",
+    "hostingPlanName": "[concat(parameters('appName'),'AppService')]",
+    "applicationInsightsName": "[concat(parameters('appName'),'Insights')]",
     "storageAccountName": "[parameters('storageaccount')]",
     "functionWorkerRuntime": "[parameters('runtime')]",
     "insightsLocation": "[parameters('insightslocation')]"
@@ -74,6 +68,7 @@
       "apiVersion": "2019-08-01",
       "name": "[variables('hostingPlanName')]",
       "location": "[parameters('location')]",
+      "kind": "linux",
       "sku": {
         "name": "Y1",
         "tier": "Dynamic",
@@ -81,6 +76,7 @@
         "family": "Y"
       },
       "properties": {
+        "reserved": true,
         "name": "[variables('hostingPlanName')]",
         "computeMode": "Dynamic"
       }
@@ -98,6 +94,7 @@
       "properties": {
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
         "siteConfig": {
+            "linuxFxVersion": "PYTHON|3.7",
           "appSettings": [
             {
               "name": "AzureWebJobsStorage",
