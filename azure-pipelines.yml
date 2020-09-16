@@ -13,8 +13,8 @@ steps:
 - task: AzureResourceManagerTemplateDeployment@3
   inputs:
     deploymentScope: 'Resource Group'
-    azureResourceManagerConnection: 'Visual Studio Enterprise Subscription – MPN - MD(1)(e4e41e7c-c6e5-4485-8360-45548d1411e2)'
-    subscriptionId: 'e4e41e7c-c6e5-4485-8360-45548d1411e2'
+    azureResourceManagerConnection: 'Microsoft Partner Network(14e538ca-8240-498c-b0b9-5e9a6eafe2c7)'
+    subscriptionId: '14e538ca-8240-498c-b0b9-5e9a6eafe2c7'
     action: 'Create Or Update Resource Group'
     resourceGroupName: 'CostAnalyticsApp'
     location: 'Central US'
