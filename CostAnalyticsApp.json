@@ -50,14 +50,15 @@
     "applicationInsightsName": "[concat(parameters('appName'),'Insights')]",
     "storageAccountName": "[parameters('storageaccount')]",
     "functionWorkerRuntime": "[parameters('runtime')]",
-    "insightsLocation": "[parameters('insightslocation')]"
+    "insightsLocation": "[parameters('insightslocation')]",
+    "logicappname": "[concat(parameters('appName'),'LogicApp')]"
   },
   "resources": [
     {
       "type": "Microsoft.Storage/storageAccounts",
       "name": "[variables('storageAccountName')]",
       "apiVersion": "2019-06-01",
-      "location": "[parameters('location')]",
+      "location": "[resourceGroup().location]",
       "kind": "Storage",
       "sku": {
         "name": "[parameters('storageAccountType')]"
@@ -67,7 +68,7 @@
       "type": "Microsoft.Web/serverfarms",
       "apiVersion": "2019-08-01",
       "name": "[variables('hostingPlanName')]",
-      "location": "[parameters('location')]",
+      "location": "[resourceGroup().location]",
       "kind": "linux",
       "sku": {
         "name": "Y1",
@@ -85,7 +86,7 @@
       "apiVersion": "2019-08-01",
       "type": "Microsoft.Web/sites",
       "name": "[variables('functionAppName')]",
-      "location": "[parameters('location')]",
+      "location": "[resourceGroup().location]",
       "kind": "functionapp,linux",
       "dependsOn": [
         "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
@@ -142,6 +143,28 @@
         "Request_Source": "IbizaWebAppExtensionCreate",
         "Application_Type": "web"
       }
+    },
+    {
+        "name": "[variables('logicappname')]",
+        "type": "Microsoft.Logic/workflows",
+        "apiVersion": "2017-07-01",
+        "location": "[resourceGroup().location]",
+        "properties": {
+            "definition": {
+                "$schema": "https://schema.management.azure.com/schemas/2016-06-01/Microsoft.Logic.json",
+                "contentVersion": "1.0.0.0",
+                "parameters": {
+                },
+                "triggers": {
+                },
+                "actions": {
+                },
+                "outputs": {
+                }
+            },
+            "parameters": {
+            }
+        }
     }
   ]
 }
