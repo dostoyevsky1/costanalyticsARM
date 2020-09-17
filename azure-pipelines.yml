@@ -13,10 +13,10 @@ steps:
 - task: AzureResourceManagerTemplateDeployment@3
   inputs:
     deploymentScope: 'Resource Group'
-    azureResourceManagerConnection: 'Microsoft Partner Network(14e538ca-8240-498c-b0b9-5e9a6eafe2c7)'
-    subscriptionId: '14e538ca-8240-498c-b0b9-5e9a6eafe2c7'
+    azureResourceManagerConnection: 'WHAL - XSP99477|MICROSOFT|XSP294073|XSP2298619(9ecab35c-73a2-4502-bf74-29cb4df1a04c)'
+    subscriptionId: '9ecab35c-73a2-4502-bf74-29cb4df1a04c'
     action: 'Create Or Update Resource Group'
-    resourceGroupName: 'CostAnalyticsApp'
+    resourceGroupName: 'WHALC1-CostAnalyticsApp1'
     location: 'Central US'
     templateLocation: 'Linked artifact'
     csmFile: 'CostAnalyticsApp.json'
